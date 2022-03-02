@@ -297,6 +297,7 @@ public class CommandHandler {
         addCommand(new StaffDutyCommand());
         addCommand(new WarpToMeCommand());
         addCommand(new WarpMeToCommand());
+        addCommand(new WhisperHotelCommand());
     }
 
     public List<Command> getCommandsForRank(int rankId) {

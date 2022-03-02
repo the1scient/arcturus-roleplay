@@ -22,7 +22,15 @@ public class StaffAlertCommand extends Command {
             }
 
             String userSend = gameClient.getHabbo().getHabboInfo().getUsername();
-            Emulator.getGameEnvironment().getRoomManager().getActiveRooms().forEach(r -> r.getHabbos().forEach(h -> h.whisper("[STAFF] " + userSend + ": " + message, RoomChatMessageBubbles.STAFF)));
+            Emulator.getGameEnvironment().getRoomManager().getActiveRooms()
+                    .forEach(r -> r.getHabbos()
+                    .forEach(h -> {
+                        if (h.getHabboInfo().getRank().getId() >= 3) {
+                            h.whisper("[STAFF] " + userSend + ": " + message, RoomChatMessageBubbles.STAFF);
+                        }
+
+                    }
+                    ));
         } else {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.error.cmd_staffalert.forgot_message"), RoomChatMessageBubbles.ALERT);
         }
