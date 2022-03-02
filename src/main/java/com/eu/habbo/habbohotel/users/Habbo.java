@@ -212,7 +212,6 @@ public class Habbo implements Runnable {
         }
         LOGGER.info("{} saiu do hotel.", this.habboInfo.getUsername());
 
-        this.getHabboInfo().setHomeRoom(this.getHabboInfo().getCurrentRoom().getId());
 
         this.client = null;
     }
