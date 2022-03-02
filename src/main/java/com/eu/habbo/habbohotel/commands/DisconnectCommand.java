@@ -41,6 +41,7 @@ public class DisconnectCommand extends Command {
         target.getHabboInfo().getCurrentRoom().giveEffect(target, 95, -1);
         target.getHabboInfo().getCurrentRoom().muteHabbo(target, 5);
         Thread.sleep(5000);
+        target.getHabboInfo().setHomeRoom(target.getHabboInfo().getCurrentRoom().getId());
         target.getClient().getChannel().close();
 
 

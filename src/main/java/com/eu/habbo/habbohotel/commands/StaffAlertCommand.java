@@ -3,8 +3,10 @@ package com.eu.habbo.habbohotel.commands;
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.gameclients.GameClient;
 import com.eu.habbo.habbohotel.messenger.Message;
+import com.eu.habbo.habbohotel.rooms.RoomChatMessage;
 import com.eu.habbo.habbohotel.rooms.RoomChatMessageBubbles;
 import com.eu.habbo.messages.outgoing.friends.FriendChatMessageComposer;
+import com.eu.habbo.messages.outgoing.rooms.users.RoomUserWhisperComposer;
 
 public class StaffAlertCommand extends Command {
     public StaffAlertCommand() {
@@ -19,8 +21,8 @@ public class StaffAlertCommand extends Command {
                 message.append(params[i]).append(" ");
             }
 
-            Emulator.getGameEnvironment().getHabboManager().staffAlert(message + "\r\n-" + gameClient.getHabbo().getHabboInfo().getUsername());
-            Emulator.getGameServer().getGameClientManager().sendBroadcastResponse(new FriendChatMessageComposer(new Message(gameClient.getHabbo().getHabboInfo().getId(), -1, message.toString())).compose(), "acc_staff_chat", gameClient);
+            String userSend = gameClient.getHabbo().getHabboInfo().getUsername();
+            Emulator.getGameEnvironment().getRoomManager().getActiveRooms().forEach(r -> r.getHabbos().forEach(h -> h.whisper("[STAFF] " + userSend + ": " + message, RoomChatMessageBubbles.STAFF)));
         } else {
             gameClient.getHabbo().whisper(Emulator.getTexts().getValue("commands.error.cmd_staffalert.forgot_message"), RoomChatMessageBubbles.ALERT);
         }
