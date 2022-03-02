@@ -175,7 +175,7 @@ public class Habbo implements Runnable {
 
         try {
             if (this.getHabboInfo().getCurrentRoom() != null) {
-                this.talk("* " + this.getHabboInfo().getUsername() + " está saindo do Hotel*", RoomChatMessageBubbles.ALERT);
+                this.talk("* " + this.getHabboInfo().getUsername() + " está saindo *", RoomChatMessageBubbles.ALERT);
                 this.getHabboInfo().setHomeRoom(this.getHabboInfo().getCurrentRoom().getId());
                 Emulator.getGameEnvironment().getRoomManager().leaveRoom(this, this.getHabboInfo().getCurrentRoom());
             }
