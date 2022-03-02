@@ -219,6 +219,8 @@ public class RoomManager {
         return categories;
     }
 
+
+
     public boolean hasCategory(int categoryId, Habbo habbo) {
         for (RoomCategory category : this.roomCategories.values()) {
             if (category.getId() == categoryId) {
@@ -290,6 +292,8 @@ public class RoomManager {
     }
 
     public Room loadRoom(int id, boolean loadData) {
+
+
         Room room = null;
 
         if (this.activeRooms.containsKey(id)) {
@@ -330,6 +334,8 @@ public class RoomManager {
     public Room createRoom(int ownerId, String ownerName, String name, String description, String modelName, int usersMax, int categoryId, int tradeType) {
         Room room = null;
 
+
+
         try (Connection connection = Emulator.getDatabase().getDataSource().getConnection(); PreparedStatement statement = connection.prepareStatement("INSERT INTO rooms (owner_id, owner_name, name, description, model, users_max, category, trade_mode) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
             statement.setInt(1, ownerId);
             statement.setString(2, ownerName);
@@ -353,6 +359,11 @@ public class RoomManager {
 
 
     public Room createRoomForHabbo(Habbo habbo, String name, String description, String modelName, int usersMax, int categoryId, int tradeType) {
+        if(habbo.getHabboInfo().getRank().getId() <= 7) {
+            habbo.alert("Você não pode fazer isso!");
+            return null;
+        }
+
         Room room = this.createRoom(habbo.getHabboInfo().getId(), habbo.getHabboInfo().getUsername(), name, description, modelName, usersMax, categoryId, tradeType);
 
         Emulator.getPluginManager().fireEvent(new NavigatorRoomCreatedEvent(habbo, room));
@@ -361,6 +372,7 @@ public class RoomManager {
     }
 
     public void loadRoomsForHabbo(Habbo habbo) {
+
         try (Connection connection = Emulator.getDatabase().getDataSource().getConnection(); PreparedStatement statement = connection.prepareStatement("SELECT * FROM rooms WHERE owner_id = ?")) {
             statement.setInt(1, habbo.getHabboInfo().getId());
             try (ResultSet set = statement.executeQuery()) {

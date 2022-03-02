@@ -21,6 +21,11 @@ public class RequestNewNavigatorRoomsEvent extends MessageHandler {
         String view = this.packet.readString();
         String query = this.packet.readString();
 
+        if(this.client.getHabbo().getHabboInfo().getRank().getId() <= 7)
+        {
+            return;
+        }
+
         if (view.equals("query")) view = "hotel_view";
         if (view.equals("groups")) view = "hotel_view";
 

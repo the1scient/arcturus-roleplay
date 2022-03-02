@@ -45,7 +45,6 @@ public class NavigatorManager {
 
 
 
-
         try (Connection connection = Emulator.getDatabase().getDataSource().getConnection()) {
             synchronized (this.publicCategories) {
                 this.publicCategories.clear();
@@ -133,9 +132,12 @@ public class NavigatorManager {
 
     public List<Room> getRoomsForCategory(String category, Habbo habbo) {
 
-        if(habbo.getHabboInfo().getRank().getId() >= 6) {
-            List<Room> rooms = new ArrayList<>();
 
+
+
+
+            List<Room> rooms = new ArrayList<>();
+        /***
             switch (category) {
                 case "my":
                     rooms = Emulator.getGameEnvironment().getRoomManager().getRoomsForHabbo(habbo);
@@ -170,14 +172,12 @@ public class NavigatorManager {
                 default:
                     return null;
             }
+         ***/
 
             Collections.sort(rooms);
         return rooms;
-        }
-        else {
-            List<Room> rooms = new ArrayList<>('a');
-            return rooms;
-        }
+
+
 
 
 
