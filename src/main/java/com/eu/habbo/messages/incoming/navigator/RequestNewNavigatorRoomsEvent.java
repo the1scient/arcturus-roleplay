@@ -21,6 +21,7 @@ public class RequestNewNavigatorRoomsEvent extends MessageHandler {
         String view = this.packet.readString();
         String query = this.packet.readString();
 
+        // limit navigator
         if(this.client.getHabbo().getHabboInfo().getRank().getId() <= 7)
         {
             return;
