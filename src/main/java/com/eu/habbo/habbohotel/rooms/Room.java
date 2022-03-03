@@ -1213,20 +1213,14 @@ public class Room implements Comparable<Room>, ISerialize, Runnable {
                                 boolean danceIsNone = (habbo.getRoomUnit().getDanceType() == DanceType.NONE);
                                 if (danceIsNone)
                                     this.sendComposer(new RoomUnitIdleComposer(habbo.getRoomUnit()).compose());
+                                    habbo.talk("* Fica ausente por inatividade *", RoomChatMessageBubbles.BLUE);
                                 if (danceIsNone && !Emulator.getConfig().getBoolean("hotel.roomuser.idle.not_dancing.ignore.wired_idle"))
                                     WiredHandler.handle(WiredTriggerType.IDLES, habbo.getRoomUnit(), this, new Object[]{habbo});
                             }
                         } else {
                             habbo.getRoomUnit().increaseIdleTimer();
 
-                            if (!this.isOwner(habbo) && habbo.getRoomUnit().getIdleTimer() >= Room.IDLE_CYCLES_KICK) {
-                                UserExitRoomEvent event = new UserExitRoomEvent(habbo, UserExitRoomEvent.UserExitRoomReason.KICKED_IDLE);
-                                Emulator.getPluginManager().fireEvent(event);
 
-                                if (!event.isCancelled()) {
-                                    toKick.add(habbo);
-                                }
-                            }
                         }
                     }
 

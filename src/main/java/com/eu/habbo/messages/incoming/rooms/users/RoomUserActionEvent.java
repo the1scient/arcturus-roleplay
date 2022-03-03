@@ -2,6 +2,7 @@ package com.eu.habbo.messages.incoming.rooms.users;
 
 import com.eu.habbo.Emulator;
 import com.eu.habbo.habbohotel.rooms.Room;
+import com.eu.habbo.habbohotel.rooms.RoomChatMessageBubbles;
 import com.eu.habbo.habbohotel.rooms.RoomUserAction;
 import com.eu.habbo.habbohotel.users.Habbo;
 import com.eu.habbo.messages.incoming.MessageHandler;
@@ -31,10 +32,18 @@ public class RoomUserActionEvent extends MessageHandler {
                 UserIdleEvent event = new UserIdleEvent(this.client.getHabbo(), UserIdleEvent.IdleReason.ACTION, true);
                 Emulator.getPluginManager().fireEvent(event);
 
+                if(habbo.getHabboInfo().getRank().getId() <= 7) {
+                    habbo.whisper("Esta ação foi desabilitada para evitar abusos.", RoomChatMessageBubbles.ALERT);
+                    this.isCancelled = true;
+                    return;
+                }
+
                 if (!event.isCancelled()) {
                     if (event.idle) {
                         room.idle(habbo);
+                        habbo.talk("* Fica ausente por inatividade *", RoomChatMessageBubbles.BLUE);
                     } else {
+                        habbo.talk("* Desperta da ausência *", RoomChatMessageBubbles.BLUE);
                         room.unIdle(habbo);
                     }
                 }

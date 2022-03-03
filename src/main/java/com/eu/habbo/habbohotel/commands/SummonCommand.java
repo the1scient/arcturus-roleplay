@@ -41,7 +41,7 @@ public class SummonCommand extends Command {
             habbo.getClient().sendResponse(new HideDoorbellComposer(""));
 
 
-            gameClient.getHabbo().talk("* Convoca " + params[1] + " para o quarto *", RoomChatMessageBubbles.STAFF);
+            gameClient.getHabbo().talk("* Convoca " + habbo.getHabboInfo().getUsername() + " para o quarto *", RoomChatMessageBubbles.STAFF);
 
             RoomTile t = gameClient.getHabbo().getHabboInfo().getCurrentRoom().getLayout().getTileInFront(gameClient.getHabbo().getRoomUnit().getCurrentLocation(), gameClient.getHabbo().getRoomUnit().getBodyRotation().getValue());
 
